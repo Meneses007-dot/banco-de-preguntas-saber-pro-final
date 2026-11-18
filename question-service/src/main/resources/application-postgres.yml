@@ -1,0 +1,13 @@
+# Production-like profile used by docker-compose (decision A3).
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/saberpro}
+    username: ${SPRING_DATASOURCE_USERNAME:saberpro}
+    password: ${SPRING_DATASOURCE_PASSWORD:saberpro}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 10000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update

@@ -1,0 +1,51 @@
+# ------------------------- Java / Maven -------------------------
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+# --------------------------- IDEs -------------------------------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+nbproject/
+nb-configuration.xml
+
+# ------------------------- OS / temporales ----------------------
+.DS_Store
+Thumbs.db
+*.swp
+*~
+*.log
+!docs/evidencias/**/*.log
+
+# ----------------------- Entorno / secretos ---------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ------------------------ Docker / datos ------------------------
+# Los volumenes nombrados viven en Docker, no en el repositorio.
+data/
+postgres-data/
+rabbitmq-data/
+
+# ------------------------ Documentos ----------------------------
+# Se versiona el .docx final, no los archivos de bloqueo de Office.
+~$*.docx
+~$*.xlsx
+*.tmp

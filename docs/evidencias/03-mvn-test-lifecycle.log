@@ -1,0 +1,83 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24469 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] -------------< co.edu.unicauca.saberpro:lifecycle-service >-------------
+[INFO] Building lifecycle-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ lifecycle-service ---
+[INFO] Deleting /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/lifecycle-service/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ lifecycle-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ lifecycle-service ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 13 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ lifecycle-service ---
+[INFO] skip non existing resourceDirectory /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/lifecycle-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ lifecycle-service ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ lifecycle-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running co.edu.unicauca.saberpro.lifecycle.api.LifecycleRestControllerTest
+22:04:37.632 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [co.edu.unicauca.saberpro.lifecycle.api.LifecycleRestControllerTest]: LifecycleRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:04:37.941 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration co.edu.unicauca.saberpro.lifecycle.LifecycleServiceApplication for test class co.edu.unicauca.saberpro.lifecycle.api.LifecycleRestControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2026-11-12T22:04:39.094-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.a.LifecycleRestControllerTest  : Starting LifecycleRestControllerTest using Java 27.0.1.0.3 with PID 83693 (started by ctos in /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/lifecycle-service)
+2026-11-12T22:04:39.097-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.a.LifecycleRestControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-11-12T22:04:43.389-05:00  INFO 83693 --- [lifecycle-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-12T22:04:43.390-05:00  INFO 83693 --- [lifecycle-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-12T22:04:43.421-05:00  INFO 83693 --- [lifecycle-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-12T22:04:43.447-05:00  INFO 83693 --- [lifecycle-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 55 ms
+2026-11-12T22:04:43.730-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.a.LifecycleRestControllerTest  : Started LifecycleRestControllerTest in 5.369 seconds (process running for 7.671)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/home/ctos/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.410 s -- in co.edu.unicauca.saberpro.lifecycle.api.LifecycleRestControllerTest
+[INFO] Running co.edu.unicauca.saberpro.lifecycle.messaging.QuestionReviewListenerTest
+2026-11-12T22:04:45.781-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-1 procesado: pregunta question-1 registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T15:04:05Z)
+2026-11-12T22:04:45.785-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-1 ya procesado; se descarta el duplicado (idempotencia)
+2026-11-12T22:04:45.785-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-1 ya procesado; se descarta el duplicado (idempotencia)
+2026-11-12T22:04:45.797-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-1 procesado: pregunta question-1 registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T15:04:05Z)
+2026-11-12T22:04:45.804-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-1 procesado: pregunta question-1 registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T15:04:05Z)
+2026-11-12T22:04:45.805-05:00  INFO 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento event-2 procesado: pregunta question-1 registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T15:04:05Z)
+2026-11-12T22:04:45.812-05:00  WARN 83693 --- [lifecycle-service] [           main] c.e.u.s.l.m.QuestionReviewListener       : Evento de revisión ignorado por contrato incompleto: QuestionReviewEvent[eventId=null, eventType=QuestionReviewRequested, version=1, occurredAt=2026-11-13T03:04:45.811968791Z, questionId=question-1, estado=PENDIENTE_REVISION, numeroOpciones=4]
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 s -- in co.edu.unicauca.saberpro.lifecycle.messaging.QuestionReviewListenerTest
+[INFO] Running co.edu.unicauca.saberpro.lifecycle.state.QuestionLifecycleTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in co.edu.unicauca.saberpro.lifecycle.state.QuestionLifecycleTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.007 s
+[INFO] Finished at: 2026-11-12T22:04:46-05:00
+[INFO] ------------------------------------------------------------------------
+exit=0

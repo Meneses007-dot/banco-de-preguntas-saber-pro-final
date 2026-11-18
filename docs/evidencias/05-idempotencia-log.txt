@@ -1,0 +1,1 @@
+2026-11-12T21:52:25.151-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-1] c.e.u.s.l.m.QuestionReviewListener       : Evento 92314fb2-cf34-40c3-841a-491855afae57 ya procesado; se descarta el duplicado (idempotencia)

@@ -1,0 +1,168 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24469 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] -------------< co.edu.unicauca.saberpro:question-service >--------------
+[INFO] Building question-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ question-service ---
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ question-service ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ question-service ---
+[INFO] skip non existing resourceDirectory /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/question-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ question-service ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ question-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running co.edu.unicauca.saberpro.question.infrastructure.api.QuestionRestControllerH2Test
+22:03:31.412 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [co.edu.unicauca.saberpro.question.infrastructure.api.QuestionRestControllerH2Test]: QuestionRestControllerH2Test does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:03:31.741 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration co.edu.unicauca.saberpro.question.QuestionServiceApplication for test class co.edu.unicauca.saberpro.question.infrastructure.api.QuestionRestControllerH2Test
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2026-11-12T22:03:32.710-05:00  INFO 82227 --- [question-service] [           main] e.u.s.q.i.a.QuestionRestControllerH2Test : Starting QuestionRestControllerH2Test using Java 27.0.1.0.3 with PID 82227 (started by ctos in /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/question-service)
+2026-11-12T22:03:32.714-05:00  INFO 82227 --- [question-service] [           main] e.u.s.q.i.a.QuestionRestControllerH2Test : The following 1 profile is active: "h2"
+2026-11-12T22:03:34.825-05:00  INFO 82227 --- [question-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-12T22:03:35.047-05:00  INFO 82227 --- [question-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 197 ms. Found 1 JPA repository interface.
+2026-11-12T22:03:36.525-05:00  INFO 82227 --- [question-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-12T22:03:36.631-05:00  INFO 82227 --- [question-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2026-11-12T22:03:36.696-05:00  INFO 82227 --- [question-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-12T22:03:37.250-05:00  INFO 82227 --- [question-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-12T22:03:37.304-05:00  INFO 82227 --- [question-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-12T22:03:37.631-05:00  INFO 82227 --- [question-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:saberpro user=SA
+2026-11-12T22:03:37.635-05:00  INFO 82227 --- [question-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-12T22:03:37.673-05:00  WARN 82227 --- [question-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-11-12T22:03:37.707-05:00  INFO 82227 --- [question-service] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-12T22:03:39.242-05:00  INFO 82227 --- [question-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-12T22:03:39.315-05:00  INFO 82227 --- [question-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-12T22:03:40.045-05:00  INFO 82227 --- [question-service] [           main] c.e.u.s.q.i.config.PuertosConfig         : Adaptador de persistencia activo: JPA(h2)
+2026-11-12T22:03:43.066-05:00  INFO 82227 --- [question-service] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:saberpro'
+2026-11-12T22:03:43.158-05:00  INFO 82227 --- [question-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-12T22:03:43.159-05:00  INFO 82227 --- [question-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-12T22:03:43.184-05:00  INFO 82227 --- [question-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-12T22:03:43.214-05:00  INFO 82227 --- [question-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 55 ms
+2026-11-12T22:03:43.372-05:00  INFO 82227 --- [question-service] [           main] e.u.s.q.i.a.QuestionRestControllerH2Test : Started QuestionRestControllerH2Test in 11.372 seconds (process running for 13.72)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/home/ctos/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-12T22:03:44.542-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: La pregunta debe tener exactamente una clave correcta.
+2026-11-12T22:03:44.686-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: La justificación debe tener al menos 15 caracteres de sustentación técnica.
+2026-11-12T22:03:45.049-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: La pregunta ya se encuentra en revisión.
+2026-11-12T22:03:45.159-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: El texto de la opción de respuesta no puede ser vacío.
+2026-11-12T22:03:45.266-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: La pregunta debe tener exactamente 4 opciones de respuesta.
+2026-11-12T22:03:45.280-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: El enunciado de la pregunta no puede ser nulo ni vacío.
+2026-11-12T22:03:45.294-05:00  WARN 82227 --- [question-service] [           main] c.e.u.s.q.i.api.GlobalExceptionHandler   : Regla de negocio violada: Identificador de pregunta inválido: no-es-un-uuid
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.09 s -- in co.edu.unicauca.saberpro.question.infrastructure.api.QuestionRestControllerH2Test
+[INFO] Running co.edu.unicauca.saberpro.question.infrastructure.jpa.JpaQuestionRepositoryContractTest
+2026-11-12T22:03:45.321-05:00  INFO 82227 --- [question-service] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [co.edu.unicauca.saberpro.question.infrastructure.jpa.JpaQuestionRepositoryContractTest]: JpaQuestionRepositoryContractTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-12T22:03:45.378-05:00  INFO 82227 --- [question-service] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration co.edu.unicauca.saberpro.question.QuestionServiceApplication for test class co.edu.unicauca.saberpro.question.infrastructure.jpa.JpaQuestionRepositoryContractTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2026-11-12T22:03:45.471-05:00  INFO 82227 --- [question-service] [           main] .q.i.j.JpaQuestionRepositoryContractTest : Starting JpaQuestionRepositoryContractTest using Java 27.0.1.0.3 with PID 82227 (started by ctos in /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/question-service)
+2026-11-12T22:03:45.472-05:00  INFO 82227 --- [question-service] [           main] .q.i.j.JpaQuestionRepositoryContractTest : No active profile set, falling back to 1 default profile: "h2"
+2026-11-12T22:03:45.699-05:00  INFO 82227 --- [question-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-12T22:03:45.729-05:00  INFO 82227 --- [question-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 1 JPA repository interface.
+2026-11-12T22:03:45.759-05:00  INFO 82227 --- [question-service] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-11-12T22:03:45.800-05:00  INFO 82227 --- [question-service] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:989dcb3d-7900-4c26-ac43-6f3bb8ee8ed5;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-11-12T22:03:45.840-05:00  INFO 82227 --- [question-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-12T22:03:45.846-05:00  INFO 82227 --- [question-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-12T22:03:45.866-05:00  INFO 82227 --- [question-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-12T22:03:45.870-05:00  WARN 82227 --- [question-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-11-12T22:03:45.873-05:00  INFO 82227 --- [question-service] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory$EmbeddedDataSourceProxy@3bd69a51']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-12T22:03:45.952-05:00  INFO 82227 --- [question-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: drop table if exists question_options cascade 
+Hibernate: drop table if exists questions cascade 
+Hibernate: create table question_options (correcta boolean not null, position integer not null, question_id uuid not null, texto varchar(500) not null, primary key (position, question_id))
+Hibernate: create table questions (id uuid not null, enunciado varchar(2000) not null, justificacion varchar(2000) not null, estado enum ('BORRADOR','PENDIENTE_REVISION') not null, primary key (id))
+Hibernate: alter table if exists question_options add constraint FKsb9v00wdrgc9qojtjkv7e1gkp foreign key (question_id) references questions
+2026-11-12T22:03:45.972-05:00  INFO 82227 --- [question-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-12T22:03:46.048-05:00  INFO 82227 --- [question-service] [           main] .q.i.j.JpaQuestionRepositoryContractTest : Started JpaQuestionRepositoryContractTest in 0.659 seconds (process running for 16.396)
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: insert into questions (enunciado,estado,justificacion,id) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: insert into questions (enunciado,estado,justificacion,id) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: update questions set enunciado=?,estado=?,justificacion=? where id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: insert into questions (enunciado,estado,justificacion,id) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: insert into questions (enunciado,estado,justificacion,id) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: insert into question_options (question_id,position,correcta,texto) values (?,?,?,?)
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+Hibernate: select qr1_0.id,qr1_0.enunciado,qr1_0.estado,qr1_0.justificacion,o1_0.question_id,o1_0.position,o1_0.correcta,o1_0.texto from questions qr1_0 left join question_options o1_0 on qr1_0.id=o1_0.question_id where qr1_0.id=?
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.907 s -- in co.edu.unicauca.saberpro.question.infrastructure.jpa.JpaQuestionRepositoryContractTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.380 s
+[INFO] Finished at: 2026-11-12T22:03:46-05:00
+[INFO] ------------------------------------------------------------------------
+exit=0

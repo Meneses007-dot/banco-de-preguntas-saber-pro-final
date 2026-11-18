@@ -1,0 +1,10 @@
+{
+  "enunciado": "",
+  "justificacion": "La clave se sustenta en la tesis central del tercer párrafo.",
+  "opciones": [
+    { "texto": "La conclusión del autor", "correcta": true },
+    { "texto": "Una cita textual", "correcta": false },
+    { "texto": "Un ejemplo del texto", "correcta": false },
+    { "texto": "Un dato histórico", "correcta": false }
+  ]
+}

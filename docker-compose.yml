@@ -1,0 +1,105 @@
+name: saberpro-banco-preguntas
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: saberpro-rabbitmq
+    ports:
+      - "5672:5672"      # AMQP
+      - "15672:15672"    # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: saberpro
+      RABBITMQ_DEFAULT_PASS: saberpro
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks: [saberpro-net]
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: saberpro-postgres
+    environment:
+      POSTGRES_DB: saberpro
+      POSTGRES_USER: saberpro
+      POSTGRES_PASSWORD: saberpro
+    ports:
+      - "5432:5432"      # optional, inspection only (decision A13)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saberpro -d saberpro"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks: [saberpro-net]
+
+  validation-service:
+    build:
+      context: ./validation-service
+      dockerfile: Dockerfile
+    container_name: saberpro-validation
+    ports: ["8082:8082"]
+    environment:
+      SERVER_PORT: 8082
+      RABBIT_HEALTH_ENABLED: "false"
+    networks: [saberpro-net]
+
+  question-service:
+    build:
+      context: ./question-service
+      dockerfile: Dockerfile
+    container_name: saberpro-question
+    ports: ["8083:8083"]
+    environment:
+      SERVER_PORT: 8083
+      # jpa | memory  <-- interchangeability switch (decision A16)
+      QUESTION_REPOSITORY_ADAPTER: ${QUESTION_REPOSITORY_ADAPTER:-jpa}
+      # postgres | memory  <-- memory starts the service without any database
+      SPRING_PROFILES_ACTIVE: ${QUESTION_PROFILE:-postgres}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/saberpro
+      SPRING_DATASOURCE_USERNAME: saberpro
+      SPRING_DATASOURCE_PASSWORD: saberpro
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: saberpro
+      SPRING_RABBITMQ_PASSWORD: saberpro
+      VALIDATION_SERVICE_URL: http://validation-service:8082
+      RABBIT_HEALTH_ENABLED: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      validation-service:
+        condition: service_started
+    networks: [saberpro-net]
+
+  lifecycle-service:
+    build:
+      context: ./lifecycle-service
+      dockerfile: Dockerfile
+    container_name: saberpro-lifecycle
+    ports: ["8084:8084"]
+    environment:
+      SERVER_PORT: 8084
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: saberpro
+      SPRING_RABBITMQ_PASSWORD: saberpro
+      RABBIT_HEALTH_ENABLED: "true"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks: [saberpro-net]
+
+networks:
+  saberpro-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  rabbitmq_data:

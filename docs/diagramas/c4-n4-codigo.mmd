@@ -1,0 +1,102 @@
+classDiagram
+  direction LR
+  title N4 - Modelo de dominio y puertos de question-service
+
+  class Question {
+    -QuestionId id
+    -Enunciado enunciado
+    -Justificacion justificacion
+    -List~AnswerOption~ opciones
+    -EstadoPregunta estado
+    +crear(Enunciado, Justificacion, List~AnswerOption~) Question$
+    +enviarARevision() void
+    +getId() QuestionId
+    +getEnunciado() Enunciado
+    +getJustificacion() Justificacion
+    +getOpciones() List~AnswerOption~
+    +getEstado() EstadoPregunta
+    +builder() Builder$
+  }
+
+  class QuestionId {
+    -UUID valor
+    +of(String) QuestionId$
+    +nuevo() QuestionId$
+    +toString() String
+  }
+
+  class Enunciado {
+    -String valor
+    +of(String) Enunciado$
+    +valor() String
+  }
+
+  class Justificacion {
+    -String texto
+    +of(String) Justificacion$
+    +texto() String
+  }
+
+  class AnswerOption {
+    -String texto
+    -boolean correcta
+    +of(String, boolean) AnswerOption$
+    +texto() String
+    +esCorrecta() boolean
+  }
+
+  class EstadoPregunta {
+    <<enumeration>>
+    BORRADOR
+    PENDIENTE_REVISION
+  }
+
+  class ReglaNegocioException {
+    <<runtime exception>>
+  }
+
+  class QuestionNotFoundException {
+    <<runtime exception>>
+  }
+
+  class CrearPreguntaUseCase {
+    <<interface>>
+    +crear(CrearPreguntaCommand) Question
+  }
+
+  class EvaluarPreguntaUseCase {
+    <<interface>>
+    +evaluar(QuestionId) Question
+  }
+
+  class ConsultarPreguntaUseCase {
+    <<interface>>
+    +consultar(QuestionId) Question
+  }
+
+  class PreguntaRepositoryPort {
+    <<interface>>
+    +save(Question) Question
+    +findById(QuestionId) Optional~Question~
+  }
+
+  class NotificacionPort {
+    <<interface>>
+    +notificarEnvioARevision(Question) void
+  }
+
+  class ValidacionPreguntaPort {
+    <<interface>>
+    +validar(CrearPreguntaCommand) ValidationResult
+  }
+
+  Question *-- QuestionId
+  Question *-- Enunciado
+  Question *-- Justificacion
+  Question *-- "4" AnswerOption
+  Question --> EstadoPregunta
+  Enunciado ..> ReglaNegocioException : INV-01
+  Justificacion ..> ReglaNegocioException : INV-02
+  AnswerOption ..> ReglaNegocioException : INV-05
+  Question ..> ReglaNegocioException : INV-03/04/06/07/08
+  Question ..> QuestionNotFoundException : lookup

@@ -1,0 +1,17 @@
+8a9bec0fadc251c56fee97637a3ced7026622f8d37a9ec719c40b0e18a564d38  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/exception/QuestionNotFoundException.java
+497f95f8943116b6e37d32f98feb9c4bf7c78fc7b504c9d847c1a3b4e1f206e3  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/exception/ReglaNegocioException.java
+343dba9915795baeae05ac2bef2c7b0394bbc7e95dbda0a3eb76bbd109200f62  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/AnswerOption.java
+e8bd87b7420bf488cc561e2fbde6fcb35d8c1c6b69a804715a19b4011da73fd5  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/Enunciado.java
+26ca2f709db1d5a713b24cb1dad8b92e3807646b9c60debe08b8cd2a69ae5c54  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/EstadoPregunta.java
+d91a879742208f7ad2da69a56326861c993467401ad42c119ef06c7ba746abc4  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/Justificacion.java
+c607cd4456a8067a6e21bcf746bc5a77a1b4ad82c8cec7bbe94cdb52d29f4a4a  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/QuestionId.java
+d0551a21442695a970e554fdd8c46062b06851036a9726c84d27ba032307c3b6  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/model/Question.java
+c09149162e1e8bd4cdd07d79607a3021b472836ab525041d29760b1335c07997  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/inbound/ConsultarPreguntaUseCase.java
+890649d2d4e7ff5a0979164c0034293b503a447fbc138149ad513b129e81b47a  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/inbound/CrearPreguntaUseCase.java
+3dd3cad0df5a5602d7ae4249c91dede19e442779c5912a56fd09cc22b8de0eeb  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/inbound/dto/CrearPreguntaCommand.java
+70b108ab36b83cb1e79504f9e4fad3e1dc34b87aa26e1c8040280b654879960b  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/inbound/dto/OpcionCommand.java
+7c7c82d19482932b807df96cc79ade228e19919bcf6bcd20dd342ece8ac08b31  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/inbound/EvaluarPreguntaUseCase.java
+956d238fed367eca3a46f269d1fdb104c4a8918fdc08e14b6fc515eb2c17fd97  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/outbound/NotificacionPort.java
+201cd95d07e331515ebd24aadd95e1bfb6af68b0be30cf7e9d88a3606cfb23ba  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/outbound/PreguntaRepositoryPort.java
+caacb429e697593eda782a264d05b56ef505e318f95693be741954178e11e1be  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/outbound/ValidacionPreguntaPort.java
+1e9ff8df4f2c3fd4c5512533fa580bd42214e01ecc2a4c9318396d6c968cb648  question-service/src/main/java/co/edu/unicauca/saberpro/question/domain/ports/outbound/ValidationResult.java

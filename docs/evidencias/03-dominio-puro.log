@@ -1,0 +1,5 @@
+$ grep -RInE "org\.springframework|jakarta\.persistence|javax\.persistence|org\.hibernate|java\.sql|com\.fasterxml\.jackson|amqp|RestController" question-service/src/main/java/co/edu/unicauca/saberpro/question/domain
+OK: DOMINIO PURO (sin Spring, JPA, Jackson, AMQP, java.sql ni anotaciones REST)
+
+$ grep -RIn "import " question-service/src/main/java/co/edu/unicauca/saberpro/question/domain | grep -v "co.edu.unicauca" | grep -v "java.util"
+OK: solo imports del propio dominio y java.util

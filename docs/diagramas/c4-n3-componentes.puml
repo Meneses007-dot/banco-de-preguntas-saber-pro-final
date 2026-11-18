@@ -1,0 +1,60 @@
+@startuml
+!include <C4/C4_Component>
+
+LAYOUT_LEFT_RIGHT()
+
+title N3 - Componentes del hexagono de question-service (:8083)
+
+Container_Ext(cliente, "Postman / Thunder Client", "Cliente REST", "Ejecuta los escenarios E2E.")
+Container_Ext(validation, "validation-service", "Spring Boot / :8082", "Validacion estructural sincrona.")
+Container_Ext(rabbit, "rabbitmq", "Broker AMQP / :5672", "Transporta los eventos de revision.")
+ContainerDb_Ext(postgres, "PostgreSQL / H2", "Base relacional", "Persistencia del agregado.")
+
+Container_Boundary(hex, "question-service - Arquitectura Hexagonal") {
+    Component(controller, "QuestionRestController", "Spring MVC", "Adaptador de entrada; depende solo de puertos inbound.")
+    Component(handler, "GlobalExceptionHandler", "@RestControllerAdvice", "ReglaNegocioException -> 400; QuestionNotFoundException -> 404.")
+
+    Component(inCrear, "CrearPreguntaUseCase", "Puerto inbound", "Contrato de creacion de reactivos.")
+    Component(inEvaluar, "EvaluarPreguntaUseCase", "Puerto inbound", "Contrato de envio a revision.")
+    Component(inConsultar, "ConsultarPreguntaUseCase", "Puerto inbound", "Contrato de consulta del agregado.")
+
+    Component(app, "QuestionApplicationService", "Servicio de aplicacion", "Orquesta validacion, agregado, persistencia y notificacion. Sin reglas de negocio.")
+
+    Component(outValid, "ValidacionPreguntaPort", "Puerto outbound", "validar(CrearPreguntaCommand).")
+    Component(outRepo, "PreguntaRepositoryPort", "Puerto outbound", "save / findById en lenguaje del dominio.")
+    Component(outNotif, "NotificacionPort", "Puerto outbound", "notificarEnvioARevision(Question).")
+
+    Component(jpa, "JpaQuestionAdapter", "Adaptador driven", "Implementa PreguntaRepositoryPort con QuestionRecord y QuestionDomainMapper.")
+    Component(memory, "InMemoryQuestionAdapter", "Adaptador driven", "Implementa PreguntaRepositoryPort con HashMap.")
+    Component(publisher, "RabbitMQPublisher", "Adaptador driven", "Implementa NotificacionPort; publica JSON sin cabecera __TypeId__.")
+    Component(client, "ValidationServiceClient", "Adaptador driven", "Implementa ValidacionPreguntaPort sobre RestClient.")
+
+    Component(domain, "Dominio puro", "Java sin frameworks", "Question, AnswerOption, Enunciado, Justificacion, QuestionId, EstadoPregunta, ReglaNegocioException.")
+
+    Component(config, "PuertosConfig", "Configuracion Spring", "Selecciona JPA o memoria por propiedad question.repository.adapter.")
+}
+
+Rel(cliente, controller, "REST/JSON", "HTTP")
+Rel(controller, inCrear, "crear(command)")
+Rel(controller, inEvaluar, "evaluar(id)")
+Rel(controller, inConsultar, "consultar(id)")
+Rel(inCrear, app, "implementado por")
+Rel(inEvaluar, app, "implementado por")
+Rel(inConsultar, app, "implementado por")
+Rel(app, domain, "crea y muta el agregado")
+Rel(app, outValid, "valida antes de crear")
+Rel(app, outRepo, "persiste")
+Rel(app, outNotif, "publica evento")
+Rel(outRepo, jpa, "implementado por")
+Rel(outRepo, memory, "implementado por")
+Rel(outNotif, publisher, "implementado por")
+Rel(outValid, client, "implementado por")
+Rel(jpa, postgres, "JDBC")
+Rel(publisher, rabbit, "AMQP")
+Rel(client, validation, "REST/JSON")
+Rel(config, jpa, "adapter=jpa")
+Rel(config, memory, "adapter=memory")
+Rel(controller, handler, "errores de dominio")
+
+SHOW_LEGEND()
+@enduml

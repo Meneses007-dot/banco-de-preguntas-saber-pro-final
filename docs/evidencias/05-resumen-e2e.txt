@@ -1,0 +1,10 @@
+== E2E asincrono local con RabbitMQ (broker real, sin Docker) ==
+2026-11-12T21:51:48-05:00
+E2E-01 POST /api/questions -> HTTP 201 (id=9b1d39f5-ee82-4a7a-9857-da8ee709224c)
+E2E-06 POST /api/questions/{id}/evaluar -> HTTP 202
+E2E-08 GET /api/lifecycle/questions/{id} -> HTTP 200
+{"questionId":"9b1d39f5-ee82-4a7a-9857-da8ee709224c","estado":"PENDIENTE_REVISION","eventId":"92314fb2-cf34-40c3-841a-491855afae57","occurredAt":"2026-11-13T02:52:23.567615229Z","processedAt":"2026-11-13T02:52:23.890141839Z"}
+RabbitMQ queue: saberpro.lifecycle.question-review | consumers: 1 | messages: 0 | durable: True | dlx: saberpro.questions.dlx
+Eventos procesados por el listener: 1
+E2E-10 reenvio del mismo eventId: descartado por idempotencia (OK)
+Evidencias en docs/evidencias/05-*

@@ -1,0 +1,10 @@
+{
+  "enunciado": "¿Cuál es la conclusión del autor del texto?",
+  "justificacion": "12345678901234",
+  "opciones": [
+    { "texto": "La conclusión del autor", "correcta": true },
+    { "texto": "Una cita textual", "correcta": false },
+    { "texto": "Un ejemplo del texto", "correcta": false },
+    { "texto": "Un dato histórico", "correcta": false }
+  ]
+}

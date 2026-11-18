@@ -1,0 +1,28 @@
+== Evidencia local (sin Docker) ==
+2026-11-12T21:49:51-05:00
+validacion-valida                      POST   http://localhost:8082/api/validation/questions -> HTTP 200
+validacion-tres-opciones               POST   http://localhost:8082/api/validation/questions -> HTTP 400
+2026-11-12T21:50:13.037-05:00  INFO 71380 --- [question-service] [           main] c.e.u.s.q.i.config.PuertosConfig         : Adaptador de persistencia activo: JPA(h2)
+01-crear                               POST   http://localhost:8083/api/questions -> HTTP 201
+id generado: aa05ade9-34ac-45dd-8187-b5e543ad1305
+01-enunciado-vacio                     POST   http://localhost:8083/api/questions -> HTTP 400
+01-justificacion-corta                 POST   http://localhost:8083/api/questions -> HTTP 400
+01-tres-opciones                       POST   http://localhost:8083/api/questions -> HTTP 400
+01-dos-claves                          POST   http://localhost:8083/api/questions -> HTTP 400
+01-evaluar                             POST   http://localhost:8083/api/questions/aa05ade9-34ac-45dd-8187-b5e543ad1305/evaluar -> HTTP 202
+01-reevaluar                           POST   http://localhost:8083/api/questions/aa05ade9-34ac-45dd-8187-b5e543ad1305/evaluar -> HTTP 400
+01-consultar                           GET    http://localhost:8083/api/questions/aa05ade9-34ac-45dd-8187-b5e543ad1305 -> HTTP 200
+01-inexistente                         GET    http://localhost:8083/api/questions/00000000-0000-4000-8000-000000000000 -> HTTP 404
+2026-11-12T21:50:29.445-05:00  INFO 71776 --- [question-service] [           main] c.e.u.s.q.i.config.PuertosConfig         : Adaptador de persistencia activo: MEMORIA(HashMap)
+02-crear                               POST   http://localhost:8083/api/questions -> HTTP 201
+id generado: 15638611-3e84-43c1-977f-596368f9ce7b
+02-enunciado-vacio                     POST   http://localhost:8083/api/questions -> HTTP 400
+02-justificacion-corta                 POST   http://localhost:8083/api/questions -> HTTP 400
+02-tres-opciones                       POST   http://localhost:8083/api/questions -> HTTP 400
+02-dos-claves                          POST   http://localhost:8083/api/questions -> HTTP 400
+02-evaluar                             POST   http://localhost:8083/api/questions/15638611-3e84-43c1-977f-596368f9ce7b/evaluar -> HTTP 202
+02-reevaluar                           POST   http://localhost:8083/api/questions/15638611-3e84-43c1-977f-596368f9ce7b/evaluar -> HTTP 400
+02-consultar                           GET    http://localhost:8083/api/questions/15638611-3e84-43c1-977f-596368f9ce7b -> HTTP 200
+02-inexistente                         GET    http://localhost:8083/api/questions/00000000-0000-4000-8000-000000000000 -> HTTP 404
+
+Evidencias escritas en docs/evidencias/. Los escenarios con RabbitMQ (E2E-07/08/10) requieren Docker Compose: ver docs/evidencias/e2e-docker.sh

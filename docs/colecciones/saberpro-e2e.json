@@ -1,0 +1,545 @@
+{
+  "info": {
+    "_postman_id": "b7f1c2d4-0000-4000-8000-abcdef123456",
+    "name": "Saber PRO - Banco de Preguntas (E2E-01 ... E2E-11)",
+    "description": "# Banco de Preguntas Saber PRO - Coleccion E2E\n\nCubre los 11 escenarios obligatorios de la Entrega Final Integradora\n(DDD + Hexagonal + Docker) sobre los tres microservicios.\n\n## Orden de ejecucion\nLa coleccion se ejecuta **de arriba hacia abajo**: `E2E-01` crea la pregunta y guarda\n`{{questionId}}`; `E2E-06` la envia a revision; `E2E-08` guarda `{{eventId}}` y\n`{{processedAt}}`; `E2E-10` reenvia ese mismo `eventId` para demostrar idempotencia.\n\n## Variables\n| Variable | Valor por defecto | Uso |\n|---|---|---|\n| `questionHost` | `http://localhost:8083` | question-service |\n| `validationHost` | `http://localhost:8082` | validation-service |\n| `lifecycleHost` | `http://localhost:8084` | lifecycle-service |\n| `rabbitHost` | `http://localhost:15672` | RabbitMQ Management API |\n| `rabbitUser` / `rabbitPass` | `guest` / `guest` | credenciales del broker |\n| `questionId` | (se calcula) | id del agregado creado en E2E-01 |\n\n## Docker vs local\nCon `docker compose up -d --build` los hosts por defecto ya apuntan a los puertos\npublicados (8082/8083/8084/15672). En local cambian solo las credenciales del broker\n(`saberpro` / `saberpro`).\n\n## E2E-11 Intercambiabilidad\nEjecutar la coleccion completa dos veces:\n1. `QUESTION_REPOSITORY_ADAPTER=jpa` + perfil `postgres` (o `h2` en local).\n2. `QUESTION_REPOSITORY_ADAPTER=memory`.\n\nLas unicas diferencias permitidas son los UUID generados.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "questionHost", "value": "http://localhost:8083" },
+    { "key": "validationHost", "value": "http://localhost:8082" },
+    { "key": "lifecycleHost", "value": "http://localhost:8084" },
+    { "key": "rabbitHost", "value": "http://localhost:15672" },
+    { "key": "rabbitUser", "value": "guest" },
+    { "key": "rabbitPass", "value": "guest" },
+    { "key": "questionId", "value": "" },
+    { "key": "eventId", "value": "" },
+    { "key": "processedAt", "value": "" },
+    { "key": "missingId", "value": "00000000-0000-4000-8000-000000000000" }
+  ],
+  "item": [
+    {
+      "name": "01 - Validacion sincrona (validation-service)",
+      "item": [
+        {
+          "name": "E2E-00a Validacion estructural valida -> 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('valido=true y sin errores', () => {",
+                  "  pm.expect(body.valido).to.be.true;",
+                  "  pm.expect(body.errores).to.be.an('array').that.is.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{validationHost}}/api/validation/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"¿Cuál es la conclusión del autor del texto?\",\n  \"justificacion\": \"La clave se sustenta en la tesis central del tercer párrafo, donde el autor afirma su postura.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": false },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false },\n    { \"texto\": \"Un dato histórico\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-00b Validacion estructural con 3 opciones -> 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('valido=false y errores reportados', () => {",
+                  "  pm.expect(body.valido).to.be.false;",
+                  "  pm.expect(body.errores.length).to.be.at.least(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{validationHost}}/api/validation/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"Pregunta con tres opciones\",\n  \"justificacion\": \"Justificación suficientemente larga para pasar la validación de longitud.\",\n  \"opciones\": [\n    { \"texto\": \"Opción A\", \"correcta\": true },\n    { \"texto\": \"Opción B\", \"correcta\": false },\n    { \"texto\": \"Opción C\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - REST sincrono (question-service)",
+      "item": [
+        {
+          "name": "E2E-01 Creacion valida -> 201 + BORRADOR",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('201 Created', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test('estado inicial BORRADOR', () => pm.expect(body.estado).to.eql('BORRADOR'));",
+                  "pm.test('4 opciones y 1 clave', () => {",
+                  "  pm.expect(body.opciones).to.have.lengthOf(4);",
+                  "  pm.expect(body.opciones.filter(o => o.correcta)).to.have.lengthOf(1);",
+                  "});",
+                  "pm.collectionVariables.set('questionId', body.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"¿Cuál es la conclusión del autor del texto?\",\n  \"justificacion\": \"La clave se sustenta en la tesis central del tercer párrafo, donde el autor afirma su postura.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": false },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false },\n    { \"texto\": \"Un dato histórico\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-02 Enunciado vacio -> 400 (INV-01)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('error REGLA_NEGOCIO con mensaje', () => {",
+                  "  pm.expect(body.error).to.eql('REGLA_NEGOCIO');",
+                  "  pm.expect(body.mensaje).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"\",\n  \"justificacion\": \"La clave se sustenta en la tesis central del tercer párrafo, donde el autor afirma su postura.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": false },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false },\n    { \"texto\": \"Un dato histórico\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-03 Justificacion de 14 caracteres -> 400 (INV-02)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('error REGLA_NEGOCIO con mensaje', () => {",
+                  "  pm.expect(body.error).to.eql('REGLA_NEGOCIO');",
+                  "  pm.expect(body.mensaje).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"¿Cuál es la conclusión del autor del texto?\",\n  \"justificacion\": \"Justificación.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": false },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false },\n    { \"texto\": \"Un dato histórico\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-04 Tres opciones -> 400 (E2E-03/INV-03)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('error REGLA_NEGOCIO con mensaje', () => {",
+                  "  pm.expect(body.error).to.eql('REGLA_NEGOCIO');",
+                  "  pm.expect(body.mensaje).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"¿Cuál es la conclusión del autor del texto?\",\n  \"justificacion\": \"La clave se sustenta en la tesis central del tercer párrafo, donde el autor afirma su postura.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": false },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-05 Dos claves correctas -> 400 (INV-04)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('error REGLA_NEGOCIO con mensaje', () => {",
+                  "  pm.expect(body.error).to.eql('REGLA_NEGOCIO');",
+                  "  pm.expect(body.mensaje).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"¿Cuál es la conclusión del autor del texto?\",\n  \"justificacion\": \"La clave se sustenta en la tesis central del tercer párrafo, donde el autor afirma su postura.\",\n  \"opciones\": [\n    { \"texto\": \"La conclusión del autor\", \"correcta\": true },\n    { \"texto\": \"Una cita textual\", \"correcta\": true },\n    { \"texto\": \"Un ejemplo del texto\", \"correcta\": false },\n    { \"texto\": \"Un dato histórico\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-06 Evaluacion valida -> 202 + PENDIENTE_REVISION",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('202 Accepted', () => pm.response.to.have.status(202));",
+                  "const body = pm.response.json();",
+                  "pm.test('estado PENDIENTE_REVISION', () => pm.expect(body.estado).to.eql('PENDIENTE_REVISION'));",
+                  "pm.test('questionId definido', () => pm.expect(pm.collectionVariables.get('questionId')).to.be.a('string').and.not.empty);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{questionHost}}/api/questions/{{questionId}}/evaluar"
+          }
+        },
+        {
+          "name": "E2E-06b Reevaluacion -> 400 (INV-07)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('400 Bad Request por INV-07', () => pm.response.to.have.status(400));",
+                  "const body = pm.response.json();",
+                  "pm.test('mensaje de doble evaluacion', () => {",
+                  "  pm.expect(body.error).to.eql('REGLA_NEGOCIO');",
+                  "  pm.expect(body.mensaje.toLowerCase()).to.include('revisi');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{questionHost}}/api/questions/{{questionId}}/evaluar"
+          }
+        },
+        {
+          "name": "E2E-09 Id inexistente -> 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('404 Not Found', () => pm.response.to.have.status(404));",
+                  "const body = pm.response.json();",
+                  "pm.test('error NO_ENCONTRADO', () => pm.expect(body.error).to.eql('NO_ENCONTRADO'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{questionHost}}/api/questions/{{missingId}}"
+          }
+        },
+        {
+          "name": "E2E-08a Consulta del agregado -> 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('id y estado persistidos', () => {",
+                  "  pm.expect(body.id).to.eql(pm.collectionVariables.get('questionId'));",
+                  "  pm.expect(body.estado).to.eql('PENDIENTE_REVISION');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{questionHost}}/api/questions/{{questionId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Mensajeria AMQP (RabbitMQ + lifecycle-service)",
+      "item": [
+        {
+          "name": "E2E-07a Exchange topic declarado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('exchange topic durable', () => {",
+                  "  pm.expect(body.name).to.eql('saberpro.questions.exchange');",
+                  "  pm.expect(body.type).to.eql('topic');",
+                  "  pm.expect(body.durable).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{rabbitUser}}" },
+                { "key": "password", "value": "{{rabbitPass}}" }
+              ]
+            },
+            "url": "{{rabbitHost}}/api/exchanges/%2F/saberpro.questions.exchange"
+          }
+        },
+        {
+          "name": "E2E-07b Cola con consumer activo y DLX",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('cola durable con consumidor', () => {",
+                  "  pm.expect(body.name).to.eql('saberpro.lifecycle.question-review');",
+                  "  pm.expect(body.durable).to.be.true;",
+                  "  pm.expect(body.consumers).to.be.at.least(1);",
+                  "});",
+                  "pm.test('DLX configurado', () => {",
+                  "  pm.expect(body.arguments['x-dead-letter-exchange']).to.eql('saberpro.questions.dlx');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{rabbitUser}}" },
+                { "key": "password", "value": "{{rabbitPass}}" }
+              ]
+            },
+            "url": "{{rabbitHost}}/api/queues/%2F/saberpro.lifecycle.question-review"
+          }
+        },
+        {
+          "name": "E2E-08 Estado registrado en lifecycle -> 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('estado del contexto de ciclo de vida', () => {",
+                  "  pm.expect(body.questionId).to.eql(pm.collectionVariables.get('questionId'));",
+                  "  pm.expect(body.estado).to.eql('PENDIENTE_REVISION');",
+                  "  pm.expect(body.eventId).to.be.a('string').and.not.empty;",
+                  "});",
+                  "pm.collectionVariables.set('eventId', body.eventId);",
+                  "pm.collectionVariables.set('processedAt', body.processedAt);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{lifecycleHost}}/api/lifecycle/questions/{{questionId}}"
+          }
+        },
+        {
+          "name": "E2E-10a Reenvio del mismo eventId (duplicado)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK del broker', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('mensaje enrutado', () => pm.expect(body.routed).to.be.true);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{rabbitUser}}" },
+                { "key": "password", "value": "{{rabbitPass}}" }
+              ]
+            },
+            "url": "{{rabbitHost}}/api/exchanges/%2F/saberpro.questions.exchange/publish",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": {},\n  \"routing_key\": \"question.review.requested\",\n  \"payload\": \"{\\\"eventId\\\":\\\"{{eventId}}\\\",\\\"eventType\\\":\\\"QuestionReviewRequested\\\",\\\"version\\\":1,\\\"occurredAt\\\":\\\"2026-11-13T15:04:05Z\\\",\\\"questionId\\\":\\\"{{questionId}}\\\",\\\"estado\\\":\\\"PENDIENTE_REVISION\\\",\\\"numeroOpciones\\\":4}\",\n  \"payload_encoding\": \"string\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "E2E-10b Idempotencia: estado no cambia",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('200 OK', () => pm.response.to.have.status(200));",
+                  "const body = pm.response.json();",
+                  "pm.test('mismo eventId y processedAt (duplicado descartado)', () => {",
+                  "  pm.expect(body.eventId).to.eql(pm.collectionVariables.get('eventId'));",
+                  "  pm.expect(body.processedAt).to.eql(pm.collectionVariables.get('processedAt'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{lifecycleHost}}/api/lifecycle/questions/{{questionId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Intercambiabilidad y salud",
+      "item": [
+        {
+          "name": "E2E-11 Salud de los tres servicios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('question-service UP', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(pm.response.code).to.eql(200);",
+                  "  pm.expect(body.status).to.eql('UP');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{questionHost}}/actuator/health"
+          }
+        },
+        {
+          "name": "E2E-11b Ciclo completo con el adaptador activo (repetir jpa y memory)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Este request se ejecuta DOS veces: con QUESTION_REPOSITORY_ADAPTER=jpa y =memory.",
+                  "// Las aserciones deben ser identicas; solo cambia el UUID generado.",
+                  "pm.test('201 Created con el adaptador activo', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.test('mismo contrato de respuesta', () => {",
+                  "  pm.expect(body.estado).to.eql('BORRADOR');",
+                  "  pm.expect(body.opciones).to.have.lengthOf(4);",
+                  "  pm.expect(body).to.have.all.keys('id', 'enunciado', 'justificacion', 'opciones', 'estado');",
+                  "});",
+                  "console.log('Adaptador bajo prueba:', pm.collectionVariables.get('adapterUnderTest') || 'definir en el entorno');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{questionHost}}/api/questions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enunciado\": \"Pregunta de intercambiabilidad entre adaptadores\",\n  \"justificacion\": \"La misma suite debe producir el mismo contrato con JPA y con memoria.\",\n  \"opciones\": [\n    { \"texto\": \"Opción A\", \"correcta\": true },\n    { \"texto\": \"Opción B\", \"correcta\": false },\n    { \"texto\": \"Opción C\", \"correcta\": false },\n    { \"texto\": \"Opción D\", \"correcta\": false }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

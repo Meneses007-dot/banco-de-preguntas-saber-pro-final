@@ -1,0 +1,26 @@
+@startuml
+!include <C4/C4_Context>
+
+title N1 - Contexto del sistema: Banco de Preguntas Saber PRO
+
+Person(docente, "Docente", "Redacta reactivos tipo Saber PRO, los envia a revision y consulta su estado.")
+Person(coordinador, "Coordinador academico", "Revisa y aprueba los reactivos enviados a revision.")
+Person(estudiante, "Estudiante", "Consumidor final del banco de preguntas (fuera del alcance de esta entrega).")
+
+System(banco, "Banco de Preguntas Saber PRO", "Valida, persiste, evalua y hace seguimiento al ciclo de vida de los reactivos.")
+
+System_Ext(cliente, "Postman / Thunder Client", "Cliente HTTP usado para ejecutar los escenarios E2E-01 a E2E-11.")
+System_Ext(rabbit, "RabbitMQ", "Broker AMQP que transporta los eventos de envio a revision.")
+System_Ext(db, "PostgreSQL / H2", "Almacenamiento relacional del agregado Question.")
+System_Ext(gestion, "RabbitMQ Management", "Consola de inspeccion de exchanges, colas y consumidores.")
+
+Rel(docente, cliente, "Ejecuta peticiones", "HTTPS")
+Rel(cliente, banco, "POST /api/questions\nPOST /api/questions/{id}/evaluar\nGET /api/questions/{id}", "REST/JSON")
+Rel(banco, rabbit, "Publica y consume eventos", "AMQP 0-9-1")
+Rel(rabbit, gestion, "Expone topologia y metricas", "HTTP")
+Rel(banco, db, "Persiste el agregado", "JDBC")
+Rel(coordinador, banco, "Consulta el estado del ciclo de vida\nGET /api/lifecycle/questions/{id}", "REST/JSON")
+Rel(estudiante, banco, "Consume preguntas aprobadas (futuro)", "REST/JSON")
+
+SHOW_LEGEND()
+@enduml

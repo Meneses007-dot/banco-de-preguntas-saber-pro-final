@@ -1,0 +1,80 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24469 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ------------< co.edu.unicauca.saberpro:validation-service >-------------
+[INFO] Building validation-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ validation-service ---
+[INFO] Deleting /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/validation-service/target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ validation-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ validation-service ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 11 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ validation-service ---
+[INFO] skip non existing resourceDirectory /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/validation-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ validation-service ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ validation-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running co.edu.unicauca.saberpro.validation.api.ValidationRestControllerTest
+22:04:18.485 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [co.edu.unicauca.saberpro.validation.api.ValidationRestControllerTest]: ValidationRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:04:18.778 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration co.edu.unicauca.saberpro.validation.ValidationServiceApplication for test class co.edu.unicauca.saberpro.validation.api.ValidationRestControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2026-11-12T22:04:19.773-05:00  INFO 83248 --- [validation-service] [           main] c.e.u.s.v.a.ValidationRestControllerTest : Starting ValidationRestControllerTest using Java 27.0.1.0.3 with PID 83248 (started by ctos in /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/validation-service)
+2026-11-12T22:04:19.776-05:00  INFO 83248 --- [validation-service] [           main] c.e.u.s.v.a.ValidationRestControllerTest : No active profile set, falling back to 1 default profile: "default"
+2026-11-12T22:04:23.473-05:00  INFO 83248 --- [validation-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-12T22:04:23.474-05:00  INFO 83248 --- [validation-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-12T22:04:23.508-05:00  INFO 83248 --- [validation-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-12T22:04:23.531-05:00  INFO 83248 --- [validation-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 55 ms
+2026-11-12T22:04:23.687-05:00  INFO 83248 --- [validation-service] [           main] c.e.u.s.v.a.ValidationRestControllerTest : Started ValidationRestControllerTest in 4.671 seconds (process running for 6.708)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/home/ctos/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-12T22:04:25.267-05:00  INFO 83248 --- [validation-service] [           main] c.e.u.s.v.api.ValidationRestController   : Pregunta rechazada por validacion estructural: [La justificación debe tener al menos 15 caracteres de sustentación técnica.]
+2026-11-12T22:04:25.477-05:00  INFO 83248 --- [validation-service] [           main] c.e.u.s.v.api.ValidationRestController   : Pregunta rechazada por validacion estructural: [La pregunta debe tener exactamente 4 opciones de respuesta.]
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.337 s -- in co.edu.unicauca.saberpro.validation.api.ValidationRestControllerTest
+[INFO] Running co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest
+[INFO] Running co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest$StructuralErrors
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest$StructuralErrors
+[INFO] Running co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest$ValidPayload
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest$ValidPayload
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.077 s -- in co.edu.unicauca.saberpro.validation.pipeline.ValidationPipelineTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  16.062 s
+[INFO] Finished at: 2026-11-12T22:04:25-05:00
+[INFO] ------------------------------------------------------------------------
+exit=0

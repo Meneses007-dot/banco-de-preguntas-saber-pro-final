@@ -1,0 +1,1 @@
+2026-11-12T21:52:23.891-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-1] c.e.u.s.l.m.QuestionReviewListener       : Evento 92314fb2-cf34-40c3-841a-491855afae57 procesado: pregunta 9b1d39f5-ee82-4a7a-9857-da8ee709224c registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T02:52:23.567615229Z)

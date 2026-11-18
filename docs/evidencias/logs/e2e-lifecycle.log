@@ -1,0 +1,31 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2026-11-12T21:51:58.636-05:00  INFO 73052 --- [lifecycle-service] [           main] c.e.u.s.l.LifecycleServiceApplication    : Starting LifecycleServiceApplication v1.0.0 using Java 27.0.1.0.3 with PID 73052 (/home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas/lifecycle-service/target/lifecycle-service-1.0.0.jar started by ctos in /home/ctos/Documentos/SEXTO SEMESTRE/LAB. SOFTWARE II/saberpro-banco-preguntas)
+2026-11-12T21:51:58.641-05:00  INFO 73052 --- [lifecycle-service] [           main] c.e.u.s.l.LifecycleServiceApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-11-12T21:52:01.843-05:00  INFO 73052 --- [lifecycle-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-11-12T21:52:01.917-05:00  INFO 73052 --- [lifecycle-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-12T21:52:01.919-05:00  INFO 73052 --- [lifecycle-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2026-11-12T21:52:02.035-05:00  INFO 73052 --- [lifecycle-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-12T21:52:02.038-05:00  INFO 73052 --- [lifecycle-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3265 ms
+2026-11-12T21:52:04.518-05:00  INFO 73052 --- [lifecycle-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-12T21:52:04.719-05:00  INFO 73052 --- [lifecycle-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-11-12T21:52:04.727-05:00  INFO 73052 --- [lifecycle-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2026-11-12T21:52:04.848-05:00  INFO 73052 --- [lifecycle-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#5b29ab61:0/SimpleConnection@65859b44 [delegate=amqp://guest@127.0.0.1:5672/, localPort=53316]
+2026-11-12T21:52:05.046-05:00  INFO 73052 --- [lifecycle-service] [           main] c.e.u.s.l.LifecycleServiceApplication    : Started LifecycleServiceApplication in 7.62 seconds (process running for 8.733)
+2026-11-12T21:52:05.682-05:00  INFO 73052 --- [lifecycle-service] [nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-12T21:52:05.683-05:00  INFO 73052 --- [lifecycle-service] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-12T21:52:05.684-05:00  INFO 73052 --- [lifecycle-service] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-12T21:52:23.891-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-1] c.e.u.s.l.m.QuestionReviewListener       : Evento 92314fb2-cf34-40c3-841a-491855afae57 procesado: pregunta 9b1d39f5-ee82-4a7a-9857-da8ee709224c registrada en el contexto de ciclo de vida (estado=PENDIENTE_REVISION, opciones=4, ocurrido=2026-11-13T02:52:23.567615229Z)
+2026-11-12T21:52:25.151-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-1] c.e.u.s.l.m.QuestionReviewListener       : Evento 92314fb2-cf34-40c3-841a-491855afae57 ya procesado; se descarta el duplicado (idempotencia)
+2026-11-12T21:52:27.186-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2026-11-12T21:52:28.154-05:00  INFO 73052 --- [lifecycle-service] [ntContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2026-11-12T21:52:28.156-05:00  INFO 73052 --- [lifecycle-service] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-12T21:52:28.162-05:00  INFO 73052 --- [lifecycle-service] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete

@@ -1,0 +1,19 @@
+%% N4 - Maquina de estados: agregado Question (question-service) y contexto de ciclo de vida (lifecycle-service).
+%% Se usan identificadores distintos por contexto para no sugerir un estado compartido.
+stateDiagram-v2
+  state "BORRADOR (Question)" as QB
+  state "PENDIENTE_REVISION (Question)" as QP
+  state "PENDIENTE_REVISION (Lifecycle)" as LP
+  state "EN_REVISION (Lifecycle)" as LR
+  state "APROBADA (Lifecycle)" as LA
+  state "RECHAZADA (Lifecycle)" as LRe
+
+  [*] --> QB : Question.crear() / INV-01, INV-02, INV-05, INV-06
+  QB --> QP : enviarARevision() valida INV-03 e INV-04
+  QP --> QP : enviarARevision() repetido (INV-07)
+  QP --> LP : evento AMQP consumido por el listener
+  LP --> LR : iniciarRevision()
+  LR --> LA : aprobar()
+  LR --> LRe : rechazar()
+  LA --> [*]
+  LRe --> [*]
