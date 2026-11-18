@@ -51,16 +51,16 @@ abstract class QuestionRestControllerContractTest {
     protected ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("E2E-01: a valid creation responds 201 and status DRAFT")
+    @DisplayName("E2E-01: a valid creation responds 201 and status BORRADOR")
     void createsValidQuestion() throws Exception {
         mockMvc.perform(post("/api/questions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options(4, 1))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.status").value("DRAFT"))
-                .andExpect(jsonPath("$.options.length()").value(4))
-                .andExpect(jsonPath("$.justification").value(VALID_JUSTIFICATION));
+                .andExpect(jsonPath("$.estado").value("BORRADOR"))
+                .andExpect(jsonPath("$.opciones.length()").value(4))
+                .andExpect(jsonPath("$.justificacion").value(VALID_JUSTIFICATION));
     }
 
     @Test
@@ -70,9 +70,9 @@ abstract class QuestionRestControllerContractTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload("", VALID_JUSTIFICATION, options(4, 1))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("BUSINESS_RULE"))
-                .andExpect(jsonPath("$.message").value(
-                        "The question statement cannot be null or empty."));
+                .andExpect(jsonPath("$.error").value("REGLA_NEGOCIO"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "El enunciado de la pregunta no puede ser nulo ni vacío."));
     }
 
     @Test
@@ -82,9 +82,9 @@ abstract class QuestionRestControllerContractTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, "12345678901234", options(4, 1))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("BUSINESS_RULE"))
-                .andExpect(jsonPath("$.message").value(
-                        "The justification must contain at least 15 characters of technical support."));
+                .andExpect(jsonPath("$.error").value("REGLA_NEGOCIO"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "La justificación debe tener al menos 15 caracteres de sustentación técnica."));
     }
 
     @Test
@@ -94,9 +94,9 @@ abstract class QuestionRestControllerContractTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options(3, 1))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("BUSINESS_RULE"))
-                .andExpect(jsonPath("$.message").value(
-                        "The question must have exactly 4 answer options."));
+                .andExpect(jsonPath("$.error").value("REGLA_NEGOCIO"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "La pregunta debe tener exactamente 4 opciones de respuesta."));
     }
 
     @Test
@@ -106,50 +106,50 @@ abstract class QuestionRestControllerContractTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options(4, 2))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("BUSINESS_RULE"))
-                .andExpect(jsonPath("$.message").value(
-                        "The question must have exactly one correct key."));
+                .andExpect(jsonPath("$.error").value("REGLA_NEGOCIO"))
+                .andExpect(jsonPath("$.mensaje").value(
+                        "La pregunta debe tener exactamente una clave correcta."));
     }
 
     @Test
     @DisplayName("E2E-05b: an empty option responds 400 with INV-05")
     void rejectsEmptyOption() throws Exception {
         List<Map<String, Object>> options = new ArrayList<>(options(4, 1));
-        options.set(2, Map.of("text", "   ", "correct", false));
+        options.set(2, Map.of("texto", "   ", "correcta", false));
 
         mockMvc.perform(post("/api/questions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(
-                        "The text of the answer option cannot be empty."));
+                .andExpect(jsonPath("$.mensaje").value(
+                        "El texto de la opción de respuesta no puede estar vacío."));
     }
 
     @Test
-    @DisplayName("E2E-06: a valid evaluation responds 202 and PENDING_REVIEW")
+    @DisplayName("E2E-06: a valid evaluation responds 202 and PENDIENTE_REVISION")
     void evaluatesValidQuestion() throws Exception {
-        mockMvc.perform(post("/api/questions/{id}/evaluate", createQuestionId()))
+        mockMvc.perform(post("/api/questions/{id}/evaluar", createQuestionId()))
                 .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.status").value("PENDING_REVIEW"));
+                .andExpect(jsonPath("$.estado").value("PENDIENTE_REVISION"));
     }
 
     @Test
-    @DisplayName("E2E-06b: the submit-for-review alias responds 202")
+    @DisplayName("E2E-06b: the enviar-a-revision alias responds 202")
     void supportsDocumentedAlias() throws Exception {
-        mockMvc.perform(post("/api/questions/{id}/submit-for-review", createQuestionId()))
+        mockMvc.perform(post("/api/questions/{id}/enviar-a-revision", createQuestionId()))
                 .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.status").value("PENDING_REVIEW"));
+                .andExpect(jsonPath("$.estado").value("PENDIENTE_REVISION"));
     }
 
     @Test
     @DisplayName("INV-07: a second evaluation responds 400")
     void rejectsDoubleEvaluation() throws Exception {
         String id = createQuestionId();
-        mockMvc.perform(post("/api/questions/{id}/evaluate", id)).andExpect(status().isAccepted());
+        mockMvc.perform(post("/api/questions/{id}/evaluar", id)).andExpect(status().isAccepted());
 
-        mockMvc.perform(post("/api/questions/{id}/evaluate", id))
+        mockMvc.perform(post("/api/questions/{id}/evaluar", id))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("The question is already under review."));
+                .andExpect(jsonPath("$.mensaje").value("La pregunta ya se encuentra en revisión."));
     }
 
     @Test
@@ -160,7 +160,7 @@ abstract class QuestionRestControllerContractTest {
         mockMvc.perform(get("/api/questions/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.status").value("DRAFT"));
+                .andExpect(jsonPath("$.estado").value("BORRADOR"));
     }
 
     @Test
@@ -168,7 +168,7 @@ abstract class QuestionRestControllerContractTest {
     void returnsNotFoundForUnknownId() throws Exception {
         mockMvc.perform(get("/api/questions/{id}", UUID.randomUUID()))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").value("NOT_FOUND"));
+                .andExpect(jsonPath("$.error").value("NO_ENCONTRADO"));
     }
 
     @Test
@@ -176,7 +176,7 @@ abstract class QuestionRestControllerContractTest {
     void returnsBadRequestForMalformedId() throws Exception {
         mockMvc.perform(get("/api/questions/{id}", "not-a-uuid"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("BUSINESS_RULE"));
+                .andExpect(jsonPath("$.error").value("REGLA_NEGOCIO"));
     }
 
     protected String createQuestionId() throws Exception {
@@ -191,15 +191,15 @@ abstract class QuestionRestControllerContractTest {
     protected String payload(String statement, String justification,
                              List<Map<String, Object>> options) throws Exception {
         return objectMapper.writeValueAsString(Map.of(
-                "statement", statement,
-                "justification", justification,
-                "options", options));
+                "enunciado", statement,
+                "justificacion", justification,
+                "opciones", options));
     }
 
     protected List<Map<String, Object>> options(int count, int correctKeys) {
         List<Map<String, Object>> options = new ArrayList<>();
         for (int index = 1; index <= count; index++) {
-            options.add(Map.of("text", "Option " + index, "correct", index <= correctKeys));
+            options.add(Map.of("texto", "Option " + index, "correcta", index <= correctKeys));
         }
         return options;
     }

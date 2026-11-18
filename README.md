@@ -8,7 +8,6 @@ Compose**.
 | Curso | Ingeniería de Software II |
 |---|---|
 | Corte | III – DDD, Arquitectura Hexagonal y Docker |
-| Integrantes (máx. 2) | _Completar: Nombre Apellido – código_ · _Completar: Nombre Apellido – código_ |
 | Repositorio | `saberpro-banco-preguntas/` |
 | Documentación | [`docs/informe/informe-tecnico.md`](docs/informe/informe-tecnico.md) · [`docs/diagramas/`](docs/diagramas) · [`docs/evidencias/`](docs/evidencias) |
 

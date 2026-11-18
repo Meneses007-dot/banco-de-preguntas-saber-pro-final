@@ -24,18 +24,18 @@ public class OptionsValidationFilter implements QuestionFilter {
                 : payload.safeOptions();
 
         if (options.size() != REQUIRED_OPTIONS) {
-            errors.add("The question must have exactly 4 answer options.");
+            errors.add("La pregunta debe tener exactamente 4 opciones de respuesta.");
         }
 
         Set<String> seen = new HashSet<>();
         for (ValidationPayload.OptionPayload option : options) {
             if (option == null || option.text() == null || option.text().isBlank()) {
-                errors.add("The text of the answer option cannot be empty.");
+                errors.add("El texto de la opción de respuesta no puede estar vacío.");
                 continue;
             }
             String normalized = option.text().trim().toLowerCase(Locale.ROOT);
             if (!seen.add(normalized)) {
-                errors.add("Answer options cannot be duplicated.");
+                errors.add("Las opciones de respuesta no pueden estar duplicadas.");
             }
         }
         return errors;

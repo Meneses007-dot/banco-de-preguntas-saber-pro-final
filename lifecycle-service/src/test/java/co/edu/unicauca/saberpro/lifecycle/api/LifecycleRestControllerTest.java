@@ -41,7 +41,7 @@ class LifecycleRestControllerTest {
         mockMvc.perform(get("/api/lifecycle/questions/{id}", "question-1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.questionId").value("question-1"))
-                .andExpect(jsonPath("$.status").value("PENDING_REVIEW"))
+                .andExpect(jsonPath("$.estado").value("PENDIENTE_REVISION"))
                 .andExpect(jsonPath("$.eventId").value("event-1"));
     }
 

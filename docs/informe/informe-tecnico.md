@@ -8,8 +8,6 @@
 
 **Universidad del Cauca — Popayán, 2026**
 
-**Integrantes:** _completar nombre y código_ · _completar nombre y código_
-
 **Profesora:** Paola Andrea Bedoya Toro
 
 **Repositorio:** `saberpro-banco-preguntas/`

@@ -17,34 +17,35 @@ class GlobalExceptionHandlerTest {
     private final GlobalExceptionHandler handler = new GlobalExceptionHandler();
 
     @Test
-    @DisplayName("A violated business rule produces 400 BUSINESS_RULE")
+    @DisplayName("A violated business rule produces 400 REGLA_NEGOCIO")
     void mapsBusinessRuleTo400() {
         ResponseEntity<ApiError> response =
                 handler.handleBusinessRule(new BusinessRuleException("The question is already under review."));
 
         assertEquals(400, response.getStatusCode().value());
         ApiError body = response.getBody();
-        assertEquals("BUSINESS_RULE", body.error());
-        assertEquals("The question is already under review.", body.message());
+        assertEquals("REGLA_NEGOCIO", body.error());
+        assertEquals("La pregunta ya se encuentra en revisión.", body.mensaje());
     }
 
     @Test
-    @DisplayName("An unknown identifier produces 404 NOT_FOUND")
+    @DisplayName("An unknown identifier produces 404 NO_ENCONTRADO")
     void mapsNotFoundTo404() {
         ResponseEntity<ApiError> response =
                 handler.handleNotFound(new QuestionNotFoundException("not found"));
 
         assertEquals(404, response.getStatusCode().value());
-        assertTrue(response.getBody().message().contains("not found"));
+        assertEquals("NO_ENCONTRADO", response.getBody().error());
+        assertTrue(response.getBody().mensaje().contains("not found"));
     }
 
     @Test
-    @DisplayName("validation-service being down produces 503 VALIDATION_UNAVAILABLE")
+    @DisplayName("validation-service being down produces 503 VALIDACION_NO_DISPONIBLE")
     void mapsUnavailableDependencyTo503() {
         ResponseEntity<ApiError> response = handler.handleValidationUnavailable(
                 new ValidationServiceUnavailableException("no connection"));
 
         assertEquals(503, response.getStatusCode().value());
-        assertEquals("VALIDATION_UNAVAILABLE", response.getBody().error());
+        assertEquals("VALIDACION_NO_DISPONIBLE", response.getBody().error());
     }
 }

@@ -40,8 +40,8 @@ class RabbitMQPublisherTest {
         assertThat(event.get("version").asInt()).isEqualTo(1);
         assertThat(event.get("occurredAt").asText()).isNotBlank();
         assertThat(event.get("questionId").asText()).isNotBlank();
-        assertThat(event.get("status").asText()).isEqualTo("PENDING_REVIEW");
-        assertThat(event.get("optionCount").asInt()).isEqualTo(4);
+        assertThat(event.get("estado").asText()).isEqualTo("PENDIENTE_REVISION");
+        assertThat(event.get("numeroOpciones").asInt()).isEqualTo(4);
         assertThat(template.message.getMessageProperties().getContentType())
                 .isEqualTo("application/json");
     }

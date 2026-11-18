@@ -8,7 +8,7 @@ import java.time.Instant;
  */
 public record LifecycleResponse(
         String questionId,
-        String status,
+        String estado,
         String eventId,
         Instant occurredAt,
         Instant processedAt) {
@@ -16,9 +16,19 @@ public record LifecycleResponse(
     public static LifecycleResponse from(QuestionLifecycle lifecycle) {
         return new LifecycleResponse(
                 lifecycle.getQuestionId(),
-                lifecycle.status(),
+                toApiStatus(lifecycle.status()),
                 lifecycle.getEventId(),
                 lifecycle.getOccurredAt(),
                 lifecycle.getProcessedAt());
+    }
+
+    private static String toApiStatus(String status) {
+        return switch (status) {
+            case "PENDING_REVIEW" -> "PENDIENTE_REVISION";
+            case "IN_REVIEW" -> "EN_REVISION";
+            case "APPROVED" -> "APROBADA";
+            case "REJECTED" -> "RECHAZADA";
+            default -> status;
+        };
     }
 }

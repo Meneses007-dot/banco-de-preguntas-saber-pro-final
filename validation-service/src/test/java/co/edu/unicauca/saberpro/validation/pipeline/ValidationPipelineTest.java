@@ -61,7 +61,7 @@ class ValidationPipelineTest {
         @DisplayName("An empty statement reports INV-01")
         void reportsEmptyStatement() {
             List<String> errors = pipeline.validate(payload("  ", VALID_JUSTIFICATION, 4, 1));
-            assertEquals(List.of("The question statement cannot be null or empty."), errors);
+            assertEquals(List.of("El enunciado de la pregunta no puede ser nulo ni vacío."), errors);
         }
 
         @Test
@@ -69,21 +69,21 @@ class ValidationPipelineTest {
         void reportsShortJustification() {
             List<String> errors = pipeline.validate(payload(VALID_STATEMENT, "12345678901234", 4, 1));
             assertEquals(List.of(
-                    "The justification must contain at least 15 characters of technical support."), errors);
+                    "La justificación debe tener al menos 15 caracteres de sustentación técnica."), errors);
         }
 
         @Test
         @DisplayName("Three options report INV-03")
         void reportsWrongOptionCount() {
             List<String> errors = pipeline.validate(payload(VALID_STATEMENT, VALID_JUSTIFICATION, 3, 1));
-            assertEquals(List.of("The question must have exactly 4 answer options."), errors);
+            assertEquals(List.of("La pregunta debe tener exactamente 4 opciones de respuesta."), errors);
         }
 
         @Test
         @DisplayName("Two correct keys report INV-04")
         void reportsWrongKeyCount() {
             List<String> errors = pipeline.validate(payload(VALID_STATEMENT, VALID_JUSTIFICATION, 4, 2));
-            assertEquals(List.of("The question must have exactly one correct key."), errors);
+            assertEquals(List.of("La pregunta debe tener exactamente una clave correcta."), errors);
         }
 
         @Test
@@ -95,7 +95,7 @@ class ValidationPipelineTest {
             List<String> errors = pipeline.validate(
                     new ValidationPayload(VALID_STATEMENT, VALID_JUSTIFICATION, options));
 
-            assertEquals(List.of("The text of the answer option cannot be empty."), errors);
+            assertEquals(List.of("El texto de la opción de respuesta no puede estar vacío."), errors);
         }
 
         @Test
@@ -107,7 +107,7 @@ class ValidationPipelineTest {
             List<String> errors = pipeline.validate(
                     new ValidationPayload(VALID_STATEMENT, VALID_JUSTIFICATION, options));
 
-            assertEquals(List.of("Answer options cannot be duplicated."), errors);
+            assertEquals(List.of("Las opciones de respuesta no pueden estar duplicadas."), errors);
         }
 
         @Test

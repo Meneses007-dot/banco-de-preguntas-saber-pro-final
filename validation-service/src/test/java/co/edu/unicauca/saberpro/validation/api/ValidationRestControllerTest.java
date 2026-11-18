@@ -39,8 +39,8 @@ class ValidationRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options(4, 1))))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.valid").value(true))
-                .andExpect(jsonPath("$.errors.length()").value(0));
+                .andExpect(jsonPath("$.valido").value(true))
+                .andExpect(jsonPath("$.errores.length()").value(0));
     }
 
     @Test
@@ -50,9 +50,9 @@ class ValidationRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, VALID_JUSTIFICATION, options(3, 1))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.valid").value(false))
-                .andExpect(jsonPath("$.errors[0]").value(
-                        "The question must have exactly 4 answer options."));
+                .andExpect(jsonPath("$.valido").value(false))
+                .andExpect(jsonPath("$.errores[0]").value(
+                        "La pregunta debe tener exactamente 4 opciones de respuesta."));
     }
 
     @Test
@@ -62,7 +62,7 @@ class ValidationRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(payload(VALID_STATEMENT, "short", options(4, 1))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.valid").value(false));
+                .andExpect(jsonPath("$.valido").value(false));
     }
 
     @Test

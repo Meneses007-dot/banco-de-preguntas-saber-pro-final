@@ -51,7 +51,7 @@ public class QuestionRestController {
     }
 
     /** E2E-06: transition to PENDING_REVIEW and asynchronous notification -> 202. */
-    @PostMapping({"/{id}/evaluate", "/{id}/submit-for-review"})
+    @PostMapping({"/{id}/evaluar", "/{id}/enviar-a-revision", "/{id}/evaluate", "/{id}/submit-for-review"})
     public ResponseEntity<QuestionResponse> evaluate(@PathVariable("id") String id) {
         QuestionResponse response = QuestionResponse.from(evaluateQuestionUseCase.evaluate(QuestionId.of(id)));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);

@@ -1,6 +1,7 @@
 package co.edu.unicauca.saberpro.question.infrastructure.api.dto;
 
 import co.edu.unicauca.saberpro.question.domain.model.Question;
+import co.edu.unicauca.saberpro.question.domain.model.QuestionStatus;
 import java.util.List;
 
 /**
@@ -8,12 +9,12 @@ import java.util.List;
  */
 public record QuestionResponse(
         String id,
-        String statement,
-        String justification,
-        List<OptionResponse> options,
-        String status) {
+        String enunciado,
+        String justificacion,
+        List<OptionResponse> opciones,
+        String estado) {
 
-    public record OptionResponse(String text, boolean correct) {
+    public record OptionResponse(String texto, boolean correcta) {
     }
 
     public static QuestionResponse from(Question question) {
@@ -24,6 +25,13 @@ public record QuestionResponse(
                 question.getOptions().stream()
                         .map(option -> new OptionResponse(option.text(), option.isCorrect()))
                         .toList(),
-                question.getStatus().name());
+                toApiStatus(question.getStatus()));
+    }
+
+    private static String toApiStatus(QuestionStatus status) {
+        return switch (status) {
+            case DRAFT -> "BORRADOR";
+            case PENDING_REVIEW -> "PENDIENTE_REVISION";
+        };
     }
 }

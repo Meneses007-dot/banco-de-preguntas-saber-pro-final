@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn -B -q clean package -DskipTests
 
 # ================ RUNTIME ================
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 RUN apt-get update \
  && apt-get install -y --no-install-recommends curl \

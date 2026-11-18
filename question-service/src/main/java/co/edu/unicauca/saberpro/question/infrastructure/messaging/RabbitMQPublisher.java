@@ -1,6 +1,7 @@
 package co.edu.unicauca.saberpro.question.infrastructure.messaging;
 
 import co.edu.unicauca.saberpro.question.domain.model.Question;
+import co.edu.unicauca.saberpro.question.domain.model.QuestionStatus;
 import co.edu.unicauca.saberpro.question.domain.ports.outbound.NotificationPort;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,7 +48,7 @@ public class RabbitMQPublisher implements NotificationPort {
                 EVENT_VERSION,
                 Instant.now(),
                 question.getId().toString(),
-                question.getStatus().name(),
+                toApiStatus(question.getStatus()),
                 question.getOptions().size());
         try {
             rabbitTemplate.send(EXCHANGE, ROUTING_KEY, toMessage(event));
@@ -60,6 +61,13 @@ public class RabbitMQPublisher implements NotificationPort {
                             + "check RabbitMQ and queue {}",
                     event.eventId(), event.questionId(), LIFECYCLE_QUEUE, exception);
         }
+    }
+
+    private static String toApiStatus(QuestionStatus status) {
+        return switch (status) {
+            case DRAFT -> "BORRADOR";
+            case PENDING_REVIEW -> "PENDIENTE_REVISION";
+        };
     }
 
     private Message toMessage(QuestionReviewEvent event) {

@@ -15,7 +15,7 @@ public class JustificationValidationFilter implements QuestionFilter {
     public List<String> validate(ValidationPayload payload) {
         if (payload == null || payload.justification() == null
                 || payload.justification().trim().length() < MIN_LENGTH) {
-            return List.of("The justification must contain at least 15 characters of technical support.");
+            return List.of("La justificación debe tener al menos 15 caracteres de sustentación técnica.");
         }
         return List.of();
     }

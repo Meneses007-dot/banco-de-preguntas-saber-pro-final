@@ -1,5 +1,7 @@
 package co.edu.unicauca.saberpro.lifecycle.messaging;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 /**
@@ -14,6 +16,6 @@ public record QuestionReviewEvent(
         int version,
         Instant occurredAt,
         String questionId,
-        String status,
-        int optionCount) {
+        @JsonProperty("estado") @JsonAlias("status") String status,
+        @JsonProperty("numeroOpciones") @JsonAlias("optionCount") int optionCount) {
 }

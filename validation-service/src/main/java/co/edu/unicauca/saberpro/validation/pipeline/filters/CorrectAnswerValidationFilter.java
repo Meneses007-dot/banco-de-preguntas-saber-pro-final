@@ -17,7 +17,7 @@ public class CorrectAnswerValidationFilter implements QuestionFilter {
                         .filter(option -> option != null && option.correct())
                         .count();
         if (keys != 1) {
-            return List.of("The question must have exactly one correct key.");
+            return List.of("La pregunta debe tener exactamente una clave correcta.");
         }
         return List.of();
     }

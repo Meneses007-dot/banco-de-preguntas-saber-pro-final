@@ -12,7 +12,7 @@ public class ContentValidationFilter implements QuestionFilter {
     @Override
     public List<String> validate(ValidationPayload payload) {
         if (payload == null || payload.statement() == null || payload.statement().isBlank()) {
-            return List.of("The question statement cannot be null or empty.");
+            return List.of("El enunciado de la pregunta no puede ser nulo ni vacío.");
         }
         return List.of();
     }
